@@ -37,9 +37,12 @@ MainScene＝＝＝＝＝＝＝＝＝(1级)
 考虑到iphone5的适配，需要在为每个layer创建ccb file的时候选择两个分辨率(iPhone Landscape－960*640和iPhone 5 Landscape1136*640)
 
 *** UI元素坐标、contentSize设置
-所有的坐标和contentSize都使用百分比的方式来设置，这样就可以兼容不同的设备分辨率了。
-
-
+(1) 容纳简单的控件的页面
+contentSize使用100%，其中的控件使用相对坐标设置。如下图：
+[[./picture/2013_10_17_pos1.jpg]]
+(2) 容纳复杂控件的页面
+contentSize使用适配分辨率中小尺寸的分辨率。例如：同时匹配iphone4和iphone5设备时，contentSize用960*640。如下图：
+[[./picture/2013_10_17_pos2.jpg]]
 * 注意事项
 + 不要使用勾选ignorAnchorPoint的功能，即ignoreAnchorPoint永远是不勾选的。
 #+BEGIN_EXAMPLE

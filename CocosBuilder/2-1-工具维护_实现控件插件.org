@@ -72,6 +72,15 @@ CocosBuilder默认的RootNode类型只有:CCNode CCLayer CCSprite等几种。要
 #+BEGIN_EXAMPLE
 CocosBuilderAppDelegate.m - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 #+END_EXAMPLE
+**** 双击一个ccb文件代码逻辑
+#+BEGIN_EXAMPLE
+1、CocosBuilderAppDelegate.m - (void) openFile:(NSString*) fileName
+2、
+CCBReaderInternal.m + (CCNode*) nodeGraphFromDocumentDictionary:(NSDictionary *)dict parentSize:(CGSize) parentSize
+读取ccb dictionary创建节点树。
+CCBReaderInternal.m + (void) setProp:(NSString*)name ofType:(NSString*)type toValue:(id)serializedValue forNode:(CCNode*)node parentSize:(CGSize)parentSize
+设置node的属性值。
+#+END_EXAMPLE
 **** 添加一个节点到场景的代码逻辑
 #+BEGIN_EXAMPLE
 1、CocosBuilderAppDelegate.m - (void) addPlugInNodeNamed:(NSString*)name asChild:(BOOL) asChild
