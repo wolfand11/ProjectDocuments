@@ -1,13 +1,82 @@
 #+Title: CocosBuilder使用手册(for designer)
 
 #+BEGIN_EXAMPLE
-该文档主要描述了，使用CocosBuilder拼UI界面的方法、流程以及一些注意事项。
+该文档主要描述了，使用CocosBuilder拼UI界面制作动画的方法、流程以及一些注意事项。
 #+END_EXAMPLE
 
-* CocosBuilder功能概述
+** 制作UI界面
+#+BEGIN_EXAMPLE
+主要使用的元素类型为
+GAbstractLayer (用来组织界面上的ui元素)
+CCNode         (用来记录位置信息，用来锁定布局)
+CCBFile        (用来关联其他界面文件，关联的界面与父界面同步创建)
+GAsyncCCBFile  (用来关联其他界面文件，关联的界面与父界面异步创建)
+CCSprite             (用来展示一个图片)
+CCLabelTTF           (用来展示文本)
+GCCScale9Sprite      (用来制作背景图片，可有效节省资源)
+CCMenu               (菜单，用来容纳菜单项，菜单项也就是按钮)
+CCMenuItemImage      (菜单项，用来触发点击事件)
+GTab                 (选项卡，用来容纳菜单项)
+CCProgressTimer      (进度条，用来显示进度的) 
 
-* 制作规范
-** UI 的组织
+Tips:
+(1) Ctrl+拖拉  可以修改ui元素的contentSize。
+(2) GTab控件下的第一个按钮为默认选中按钮。
+(3) 新加字体文件的名字必须和该字体的真实名字一样。
+
+资源的组织和命名
+放在各个场景目录下，若页面很多时，可以继续按照页面添加目录进行组织。
+
+Example:
+拼主界面
+#+END_EXAMPLE
+
+** 制作动画
+#+BEGIN_EXAMPLE
+机制：
+在时间轴上，设置元素在不同时间点上的属性。可设置的属性由元素的类型决定。
+
+主要使用的元素类型为
+CCLabel 
+CCSprite
+CCLayerColor
+GCCPariticleSystemQuad
+
+属性变化方式
+instant 立即变化(不自动生成关键帧之间的属性值)
+linear  线性变化
+ease    缓慢效果
+elastic 弹性效果
+bounce  反弹效果
+back    延迟效果
+in/out  对应于变化的开始和结束。
+
+Tips:
+(1)选中一系列帧快捷键，使用鼠标框选。
+(2)等比例缩放选中帧之间的间隔，菜单Animation->StretchSeletedKeyframes.
+
+资源的组织和命名
+帧动画图片资源放置在各个场景目录的animation下，若动画很多时，可以继续添加目录进行组织。
+离子特效图片资源放置在particle目录下。
+
+Example:
+(1) Label加血动画
+(2) 角色动画
+(3) GCCParticleSystemQuad动画
+
+几个问题：
+(0) 由于人类眼睛的特殊生理结构，如果所看画面之帧率高于每秒约10-12帧的时候，就会认为是连贯的。连贯是指看到的不是幻灯片。
+(1) 人脑处理的图像帧、电影帧和游戏帧的不同
+人脑处理的是持续叠加的图像信息 电影帧记录的是一个曝光时间内的画面叠加信息，游戏帧记录的是某个时刻的画面信息。
+(2) 为什么游戏帧动画需要30帧，帧频需要设置为60帧。
+对于运动速度不快的动画，电影24帧就ok了，游戏需要30帧。
+人眼对亮度的感知极限是1/48秒。对于一些亮度变化快的动画，需要达到48帧，否则会有闪烁。结合上面速度不快的动画需要30帧，游戏里面需要设置帧频为60帧，即游戏中的时间单位为1/60秒。
+(3) 抽帧的方法
+动作慢的地方多抽掉一些 动作变化快的地方少抽掉一些。
+#+END_EXAMPLE
+
+** 注意事项
+*** UI 的组织
 1、需要为每个页面新建一个ccb文件，而不是将所有的UI元素都放在一个Layer上，这样的话当一个页面有问题的时候，不会影响到其他的页面。
 
 2、属于同一个场景的所有的页面通过一个页面来组织。
@@ -32,7 +101,6 @@ MainScene＝＝＝＝＝＝＝＝＝(1级)
 如果这样做的话，在程序中就需要实现多个管理类来，管理其下面的Layer元素。增加了程序的复杂度。
 #+END_EXAMPLE
 
-** UI元素的坐标
 *** 分辨率选择
 考虑到iphone5的适配，需要在为每个layer创建ccb file的时候选择两个分辨率(iPhone Landscape－960*640和iPhone 5 Landscape1136*640)
 
@@ -47,33 +115,35 @@ contentSize使用适配分辨率中小尺寸的分辨率。例如：同时匹配
 
 [[./pictures/2013_10_17_pos2.png]]
 
-* 注意事项
-+ 不要使用勾选ignorAnchorPoint的功能，即ignoreAnchorPoint永远是不勾选的。
+*** 不要使用勾选ignorAnchorPoint的功能，即ignoreAnchorPoint永远是不勾选的。
 #+BEGIN_EXAMPLE
 说明:程序的bug。目前已经修正，可以使用该功能了。
 #+END_EXAMPLE
-
-+ 关于尺寸、坐标的属性填写。
+*** CCEditBox控件
 #+BEGIN_EXAMPLE
-(1)最外层的UI元素都使用百分比的方式。坐标使用50%、尺寸使用100%
-(2)子UI元素更具实际情况使用对应的方式，如果iphone4和iphone5中，ui元素的坐标、尺寸相同则使用绝对数值设置属性，否则使用百分比的方式来适配。
-说明:这样可以适配不同分辨率的设备。例如:iphone4和iphone5。
-#+END_EXAMPLE
-
-+ 使用CCEditBox控件的时候，在设置CCEditBox的AnchorPoint时，需要将其设置为(0.5,0.5)
-#+BEGIN_EXAMPLE
+在设置CCEditBox的AnchorPoint时，需要将其设置为(0.5,0.5)
 说明:anchorPoint设置为其他值时，CCEidtBox控件在程序中的显示会出错。
 #+END_EXAMPLE
 
-+ 在Publish界面配置的时候，需要确定是否每个ccb文件都保存过了。
+*** Publish界面配置
 #+BEGIN_EXAMPLE
+需要确定是否每个ccb文件都保存过了。
 说明:没有保存ccb文件就Publish，ccb文件的内容不会被publish到ccbi文件中。
 #+END_EXAMPLE
 
-+ GList控件不能勾选ignorAnchorPoint功能。
+*** GList控件
 #+BEGIN_EXAMPLE
-当anchorPoint=(0.0,1.0)时，表示列表中元素从上往下排布。
+不能勾选ignorAnchorPoint功能。当anchorPoint=(0.0,1.0)时，表示列表中元素从上往下排布。
 #+END_EXAMPLE
 
-+ GScale9Sprite的AnchorPoint必须为(0.5,0.5)；
+*** GScale9Sprite
+#+BEGIN_EXAMPLE
+的AnchorPoint必须为(0.5,0.5)；
+#+END_EXAMPLE
+** 参考链接
+frame rate(帧频) [[http://en.wikipedia.org/wiki/Frame_rate]]
 
+为什么电影只有24帧？[[http://www.zhihu.com/question/20207871]]
+
+为什么认为游戏帧数要到 60 帧每秒才流畅，而大部分电影帧数只有 24 帧每秒？
+[[http://www.zhihu.com/question/21081976]]
