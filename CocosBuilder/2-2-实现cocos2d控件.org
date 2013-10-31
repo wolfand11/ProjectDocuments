@@ -11,7 +11,7 @@ container中记录Item的排布方向(direction)，第一个Item的放置位置(
 如果firstItemPos 为Item中心点的位置，则Item的AnchorPoint需要设置为(0.5,0.5)
 如果firstItemPos 为Item坐下点的位置，则Item的AnchorPoint需要设置为(0.0,0.0)
 #+END_EXAMPLE
-[[./2013_10_31_containerItemAnchorPos.png]]
+[[./pictures/2013_10_31_containerItemAnchorPos.png]]
 
 ** 控件实现
 *** NormalScrollList
