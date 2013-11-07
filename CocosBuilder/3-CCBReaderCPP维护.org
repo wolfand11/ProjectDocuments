@@ -1,0 +1,81 @@
+#+Title: CCBReader extension 维护
+
+** 读取节点动画代码分析
+#+BEGIN_EXAMPLE
+file:     CCBReader.cpp 
+function: CCNode * CCBReader::readNodeGraph(CCNode * pParent);
+content:
+    // Read animated properties
+    CCDictionary *seqs = CCDictionary::create();
+    mAnimatedProps = new set<string>();
+    //-- 读取节点时间线数目
+    int numSequence = readInt(false);
+    for (int i = 0; i < numSequence; ++i)
+    {
+        int seqId = readInt(false);
+        CCDictionary *seqNodeProps = CCDictionary::create();
+
+        //-- 读取某个时间线中，该节点有几种类型的动画（visible、position、scale等等）
+        int numProps = readInt(false);
+        
+        for (int j = 0; j < numProps; ++j)
+        {
+            CCBSequenceProperty *seqProp = new CCBSequenceProperty();
+            seqProp->autorelease();
+            
+            seqProp->setName(readCachedString().c_str());
+            seqProp->setType(readInt(false));
+            mAnimatedProps->insert(seqProp->getName());
+
+            //-- 读取某个类型的动画有几个关键帧
+            int numKeyframes = readInt(false);
+            
+            for (int k = 0; k < numKeyframes; ++k)
+            {
+                CCBKeyframe *keyframe = readKeyframe(seqProp->getType());
+                
+                seqProp->getKeyframes()->addObject(keyframe);
+            }
+            
+            seqNodeProps->setObject(seqProp, seqProp->getName());
+        }
+        
+        seqs->setObject(seqNodeProps, seqId);
+    }
+    
+    if (seqs->count() > 0)
+    {
+        mActionManager->addNode(node, seqs);
+    }
+
+内存种动画数据结构
+// 总结构
+node-seqs  
+node是指向节点的指针 
+seqs解析如下
+// seqs结构
+seqId-seqNodeProps 
+seqId是时间线唯一表示符，一个int值，从0开始。
+seqNodeProps是CCBSeqenceProperty对象，其结构如下。
+// CCBSeqenceProperty结构
+其中保存了时间线类型名称，时间线类型ID，该时间线包含的关键帧数组。关键帧结构如下
+// CCBKeyframe的结构
+CCObject *mValue; 关键帧的数据
+float mTime;      时间点
+int mEasingType;  缓动类型
+float mEasingOpt; 缓动参数
+#+END_EXAMPLE
+
+
+
+
+
+** 播放动画的代码分析
+#+BEGIN_EXAMPLE
+file:        CCBAnimationManager.cpp
+function:    
+void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration);
+contents:    
+
+#+END_EXAMPLE
+
