@@ -131,9 +131,15 @@ contentSize使用适配分辨率中小尺寸的分辨率。例如：同时匹配
 说明:没有保存ccb文件就Publish，ccb文件的内容不会被publish到ccbi文件中。
 #+END_EXAMPLE
 
-*** GList控件
+*** GList控件 GPage控件
 #+BEGIN_EXAMPLE
-不能勾选ignorAnchorPoint功能。当anchorPoint=(0.0,1.0)时，表示列表中元素从上往下排布。
+不能勾选ignorAnchorPoint功能。
+当anchorPoint=(0.0,1.0)时，表示列表中元素从上往下排布。
+当anchorPoint=(0,0)时,表示列表中元素从左往右排布。
+direction=horizontal columnCount=1 表示为GList控件
+direction=vertical rowCount=1      表示为GList控件
+direction=horizontal columnCount>1 表示为GPage控件
+direction=vertical rowCount>1      表示为GPage控件
 #+END_EXAMPLE
 
 *** GScale9Sprite

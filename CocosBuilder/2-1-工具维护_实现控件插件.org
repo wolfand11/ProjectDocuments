@@ -141,7 +141,7 @@ CocosBuilder_v3.x 中得xib文件使用Xcode 4.6打开。可以在Xcode5中设�
 *** 属性plist文件的编辑中，需要注意的几个问题:
 + 将属性放置在propertiesOverridden下，可以覆盖父类的属性设置。
 + 将属性设置为readOnly＝Yes时，该属性将不会被写到ccb和ccbi文件中。
-+ 当属性值等于defaultSerialization时，CocosBuilder会忽略该属性值，而不将其写入ccb文件。
++ 当属性值等于defaultSerialization时，CocosBuilder会忽略该属性值，而不将其写入ccb文件。在plist中去掉defaultSerialization属性以后，其所对应的属性一定会被记录。
 
 *** 控件的编辑类中属性编辑函数的实现注意事项
 CocosBuilder是通过反射机制来动态设置控件的属性的，即在CocosBuilder底层他通过传递名称来调用函数，所以在属性plist中name字段的值要和编辑类中属性设置函数的名称相匹配。

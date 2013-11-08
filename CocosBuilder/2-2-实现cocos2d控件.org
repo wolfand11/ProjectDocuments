@@ -5,14 +5,35 @@
 + 显示在哪儿? 坐标问题。
 + 支持哪些用户操作? 事件相应问题。
 + 显示一些什么内容? 逻辑问题。
-*** ContainerItem的AnchorPoint可以是自由的
+*** 关于GNormalLayout
 #+BEGIN_EXAMPLE
-container中记录Item的排布方向(direction)，第一个Item的放置位置(firstItemPos)，Item之间的间隔(itemInterval)。
-如果firstItemPos 为Item中心点的位置，则Item的AnchorPoint需要设置为(0.5,0.5)
-如果firstItemPos 为Item坐下点的位置，则Item的AnchorPoint需要设置为(0.0,0.0)
+GNormalLayout中记录了下面的这些信息：
+(1)Item的排布方向(direction)
+(2)第一个Item的中心点的位置(firstItemMidPos,在layout控件中通过position来设置)
+依据Item的contentSize和anchorPoint可以求出Item的实际position。
+(3)Item之间的间隔(itemColumnInterval itemRowInterval，在layout控件中通过contentSize来设置)
+interval其实是相邻item中心点坐标的差值。
+(4)Item的行列数目(在layout控件中通过RowCount和ColumnCount来设置)。
 #+END_EXAMPLE
-[[./pictures/2013_10_31_containerItemAnchorPos.png]]
+[[./pictures/2013_11_2_NormalLayout-m_pageSize.png]]
+*** 在CCB中只需要Layout保存排布方向属性
+#+BEGIN_EXAMPLE
+为Container设置layout的时候，读取layout的排布方向属性，来设置container的排布方向。
+#+END_EXAMPLE
+*** 关于GList GPage
+#+BEGIN_EXAMPLE
+GList
+(1)水平滑动的GList columnCount=1 rowCount可以为1-n
+(2)竖直滑动的GList columnCount可以为1-n rowCount=1
+GPage 
+(1)columnCount可以为1-n rowCount可以为1-n
+(2)columnCount=1 && rowCount=1 表示一页只有一个Item
+#+END_EXAMPLE
 
+*** 关于GMutableSizeItemLayout
+#+BEGIN_EXAMPLE
+
+#+END_EXAMPLE
 ** 控件实现
 *** NormalScrollList
 #+BEGIN_EXAMPLE
