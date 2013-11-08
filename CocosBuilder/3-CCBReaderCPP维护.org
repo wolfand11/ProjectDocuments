@@ -79,3 +79,9 @@ contents:
 
 #+END_EXAMPLE
 
+
+** readNodeGraph(CCNode* parent)
+#+BEGIN_EXAMPLE
+修改addChild的时机，使用loader创建出来node就将其加到父节点上，这样在解析node属性过程中可以使用
+convertToWorldSpace系列的函数。
+#+END_EXAMPLE
