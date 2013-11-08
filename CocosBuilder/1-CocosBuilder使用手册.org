@@ -140,6 +140,34 @@ contentSize使用适配分辨率中小尺寸的分辨率。例如：同时匹配
 #+BEGIN_EXAMPLE
 的AnchorPoint必须为(0.5,0.5)；
 #+END_EXAMPLE
+*** GZoomAreaProperty
+#+BEGIN_EXAMPLE
+需要GZoomAreaProperty的控件，需要为自己添加一个CCNode的子节点，然后为该CCNode控件设置CustomClass为GZoomAreaProperty。
+position 存储zoomArea.orgin
+size     存储zoomArea.size
+scale.x  存储normalScaleValue
+scale.y  存储zoomScaleValue
+#+END_EXAMPLE
+*** GEZLayoutHasZArea
+#+BEGIN_EXAMPLE
+水平排布时 position记录第一个item achorPos(0.0f,0.0f)的位置(m_startPos) 同时 列间隔(m_columnInterval)=2*m_startPos.x
+竖直排布时 position记录第一个item achorPos(0.0f,1.0f)的位置(m_startPos) 同时 行间隔(m_rowInterval)=2*(m_startPos.y-m_zoomArea.height)
+contentSize 记录Item未缩放时的尺寸(m_normalItemSize)
+startZoomItemsIndex 存储开始缩放的Item的Index
+zoomItemsCount 存储缩放区域中可放置的Item数量
+showedItemsCount 存储显示区域中可放置的Item数量
+#+END_EXAMPLE
+*** GEasySlideContainer
+#+BEGIN_EXAMPLE
+position      存储container anchor点的坐标
+contentSize   存储touchRectSize＝showRectSize
+anchorPoint=(0,0) 表示水平排布
+anchorPoint=(0,1) 表示竖直排布
+GEasySlideContainer 适用于GList GPageContainer GEZContainerHasZArea
+GList需要GNormalLayout子节点
+GPageContainer需要GNormalLayout子节点
+GEZContainerHasZArea需要GEZLayoutHasZArea节点和GZoomAreaPropery节点
+#+END_EXAMPLE
 ** 参考链接
 frame rate(帧频) [[http://en.wikipedia.org/wiki/Frame_rate]]
 
