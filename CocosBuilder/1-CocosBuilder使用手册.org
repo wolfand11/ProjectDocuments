@@ -18,6 +18,11 @@ CCMenu               (菜单，用来容纳菜单项，菜单项也就是按钮)
 CCMenuItemImage      (菜单项，用来触发点击事件)
 GTab                 (选项卡，用来容纳菜单项)
 CCProgressTimer      (进度条，用来显示进度的) 
+GEZTouchLayer        (可触摸页面)
+GAbstractSlideContainer   (容器控件，GList GPageContainer GEZContainer GLEZContainer GEZContainerHasZArea GLEZContainerHasZArea)
+GNormalLayout             (容器内Item布局, 适用于位置是有规律排布的Item。可用于GList GPageContainer)
+GConfigLayout             (容器内Item布局，适用于位置是无规律排布的Item。)
+GEZLayout GEZLayoutHasZArea  (可用于GEZContainer GLEZContainer GEZContainerHasZArea GLEZContainerHasZArea)
 
 Tips:
 (1) Ctrl+拖拉  可以修改ui元素的contentSize。
